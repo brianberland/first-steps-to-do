@@ -1,0 +1,11 @@
+version: '3'
+services:
+  frontend:
+    build: frontend
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./frontend:/code
+      - /code/node_modules
+    environment:
+      - PORT=8888
