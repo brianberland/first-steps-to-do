@@ -11,16 +11,6 @@ const styles = theme => ({
     },
 });
 
-class Task {
-    constructor({text, isChecked}) {
-        this.text = text || '';
-        this.isChecked = isChecked || false;
-    }
-    text = '';
-    isChecked = false;
-    onClick = (checked) => this.isChecked = checked;
-}
-
 class ToDoList extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -33,27 +23,27 @@ class ToDoList extends React.Component {
         tasks: [],
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            task: new Task({
-                text: 'fish tiddies', 
-                isChecked: true
-            }),
-            isChecked: true,
-        };
+    renderTasks(task) {
+        const {text, isChecked} = task;
+
+        return (
+            <ToDoTask 
+                text={text} 
+                isChecked={isChecked} 
+                onClick={value => task.isChecked = value} 
+            />
+        );
     }
 
     render() {
-        const {classes, title} = this.props;
-        const {task, isChecked} = this.state;
+        const {classes, title, tasks} = this.props;
 
         return (
             <Paper className={classes.root} elevation={10}>
                 <Typography variant="h2">
                     {title}
                 </Typography>
-                <ToDoTask text={task.text} isChecked={isChecked} onClick={(checked) => this.setState({isChecked: checked})} />
+                {tasks.map(this.renderTasks)}
             </Paper>
         );
     }

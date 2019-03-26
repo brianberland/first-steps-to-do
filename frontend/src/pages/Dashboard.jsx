@@ -16,14 +16,15 @@ const styles = {
 class Dashboard extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
     };
 
-
     render() {
-        const {classes} = this.props;
+        const {classes, store} = this.props;
+
         return (
             <div className={classes.root}>
-                <ToDoList />
+                <ToDoList tasks={store.tasks} />
             </div>
         );
     }
