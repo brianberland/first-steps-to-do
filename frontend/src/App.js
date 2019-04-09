@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from 'pages/Dashboard';
 
-import TaskStore from 'TaskStore';
+import { TaskStore, TaskContext } from 'TaskStore';
 
 const theme = createMuiTheme({palette: {type: 'dark'}});
 const store = new TaskStore();
@@ -13,7 +13,9 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Dashboard store={store} />
+        <TaskContext.Provider value={store}>
+          <Dashboard />
+        </TaskContext.Provider>
       </MuiThemeProvider>
     );
   }

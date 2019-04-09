@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,11 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { TaskContext } from 'TaskStore';
 
 export default class PopUpAdd extends React.Component {
-    static propTypes = {
-        addTask: PropTypes.func.isRequired,
-    };
+    static contextType = TaskContext;
     
     state = {
         open: false,
@@ -21,7 +19,7 @@ export default class PopUpAdd extends React.Component {
     openDialog = () => this.setState({open: true});
     closeDialog = () => this.setState({open: false});
     saveTask = () => {
-        this.props.addTask(this.state.text);
+        this.context.addTask(this.state.text);
         this.setState({open: false, text: ''});
     };
 
@@ -30,7 +28,7 @@ export default class PopUpAdd extends React.Component {
 
         return (
             <React.Fragment>
-                <Button variant="outlined" color="primary" onClick={this.openDialog}>
+                <Button variant="contained" color="primary" size="large" onClick={this.openDialog}>
                     Add a New Task
                 </Button>
                 <Dialog

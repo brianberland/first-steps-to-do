@@ -1,6 +1,7 @@
+import React from 'react';
 import { observable, computed, action, decorate } from "mobx";
 
-class TaskStore {
+class TaskStoreBase {
     tasks = [];
 
     get checkedTasksCount() {
@@ -15,8 +16,10 @@ class TaskStore {
     }
 }
 
-export default decorate(TaskStore, {
+export const TaskStore = decorate(TaskStoreBase, {
     tasks: observable,
     checkedTasksCount: computed,
     addTask: action,
 });
+
+export const TaskContext = React.createContext(new TaskStore());
