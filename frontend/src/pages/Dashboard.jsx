@@ -18,9 +18,9 @@ class Dashboard extends React.Component {
         classes: PropTypes.object.isRequired,
     };
 
-
     render() {
         const {classes} = this.props;
+
         return (
             <div className={classes.root}>
                 <ToDoList />

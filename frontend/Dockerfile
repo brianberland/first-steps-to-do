@@ -5,4 +5,4 @@ WORKDIR /code
 ADD package.json /code/
 RUN yarn install
 
-CMD npm start
+CMD yarn run start
