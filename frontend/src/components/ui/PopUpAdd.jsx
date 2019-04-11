@@ -14,17 +14,22 @@ export default class PopUpAdd extends React.Component {
     state = {
         open: false,
         text: '',
+        error: false,
     };
 
     openDialog = () => this.setState({open: true});
-    closeDialog = () => this.setState({open: false});
+    closeDialog = () => this.setState({open: false, text: ''});
     saveTask = () => {
-        this.context.addTask(this.state.text);
-        this.setState({open: false, text: ''});
+        if (this.state.text) {
+            this.context.addTask(this.state.text);
+            this.setState({open: false, text: ''});
+        } else {
+            this.setState({error: true});
+        }
     };
 
     render() {
-        const {open, text} = this.state;
+        const {open, text, error} = this.state;
 
         return (
             <React.Fragment>
@@ -41,16 +46,17 @@ export default class PopUpAdd extends React.Component {
                             Write out your New Task below:
                         </DialogContentText>
                         <TextField
-                            autoFocus
-                            fullWidth
                             margin="dense"
                             label="Task Text"
                             type="text"
                             placeholder="New Task"
                             InputProps={{
-                                onChange: e => this.setState({text: e.target.value}),
+                                onChange: e => this.setState({text: e.target.value, error: false}),
                                 value: text,
                             }}
+                            autoFocus
+                            fullWidth
+                            error={error}
                         />
                     </DialogContent>
                     <DialogActions>
