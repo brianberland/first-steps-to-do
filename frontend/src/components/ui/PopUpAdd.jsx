@@ -17,8 +17,23 @@ export default class PopUpAdd extends React.Component {
         error: false,
     };
 
+    componentDidMount() {
+        window.addEventListener('keydown', this.enterKeyListener);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.enterKeyListener);
+    }
+
+    enterKeyListener = e => {
+        if (e.key === 'Enter' && this.state.open) {
+            e.preventDefault();
+            this.saveTask();
+        }
+    };
+
     openDialog = () => this.setState({open: true});
-    closeDialog = () => this.setState({open: false, text: ''});
+    closeDialog = () => this.setState({open: false, text: '', error: false});
     saveTask = () => {
         if (this.state.text) {
             this.context.addTask(this.state.text);

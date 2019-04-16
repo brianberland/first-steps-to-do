@@ -31,18 +31,6 @@ class ToDoList extends React.Component {
 
     static contextType = TaskContext;
 
-    renderTasks(task) {
-        const {text, isChecked} = task;
-
-        return (
-            <ToDoTask 
-                text={text} 
-                isChecked={isChecked} 
-                onClick={value => task.isChecked = value} 
-            />
-        );
-    }
-
     render() {
         const {classes, title} = this.props;
         const {tasks} = this.context;
@@ -52,7 +40,7 @@ class ToDoList extends React.Component {
                 <Typography variant="h4">
                     {title}
                 </Typography>
-                {tasks.map(this.renderTasks)}
+                {tasks.map(task => <ToDoTask task={task} />)}
                 <div className={classes.popUpContainer}>
                     <PopUpAdd />
                 </div>

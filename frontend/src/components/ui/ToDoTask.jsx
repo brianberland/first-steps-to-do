@@ -3,31 +3,33 @@ import PropTypes from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { observer } from 'mobx-react';
+import TaskLabel from './TaskLabel';
 
 class ToDoTask extends React.Component {
     static propTypes = {
-        text: PropTypes.string.isRequired,
-        isChecked: PropTypes.bool.isRequired,
-        onClick: PropTypes.func.isRequired,
+        task: PropTypes.object.isRequired,
     };
 
     render() {
-        const {text, isChecked, onClick} = this.props;
+        const {task} = this.props;
+        const {text, isChecked} = task;
         return (
             <FormGroup row>
                 <FormControlLabel
                     control={
                         <Checkbox
                             checked={isChecked}
-                            onChange={(event) => onClick(event.target.checked)}
+                            onChange={event => task.isChecked = event.target.checked}
                             value={text}
-                            color="primary"
+                            color="secondary"
                         />
                     }
-                    label={text}
+                    label={<TaskLabel task={task} />}
                 />
             </FormGroup>
         );
     }
 }
-export default ToDoTask;
+
+export default observer(ToDoTask);
