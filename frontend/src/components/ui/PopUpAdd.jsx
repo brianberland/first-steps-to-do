@@ -6,10 +6,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { TaskContext } from 'TaskStore';
+import PropTypes from 'prop-types';
 
 export default class PopUpAdd extends React.Component {
-    static contextType = TaskContext;
+    static propTypes = {
+        addTask: PropTypes.func.isRequired,
+    };
     
     state = {
         open: false,
@@ -36,7 +38,7 @@ export default class PopUpAdd extends React.Component {
     closeDialog = () => this.setState({open: false, text: '', error: false});
     saveTask = () => {
         if (this.state.text) {
-            this.context.addTask(this.state.text);
+            this.props.addTask(this.state.text);
             this.setState({open: false, text: ''});
         } else {
             this.setState({error: true});

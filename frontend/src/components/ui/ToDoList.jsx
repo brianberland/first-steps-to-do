@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import { observer } from 'mobx-react';
 import ToDoTask from './ToDoTask';
-import { TaskContext } from 'TaskStore';
+import { ListContext } from 'TaskStore';
 import PopUpAdd from './PopUpAdd';
 
 const styles = theme => ({
@@ -22,27 +22,22 @@ const styles = theme => ({
 class ToDoList extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        title: PropTypes.string,
+        list: PropTypes.object.isRequired,
     };
 
-    static defaultProps = {
-        title: 'My To Do List',
-    };
-
-    static contextType = TaskContext;
+    static contextType = ListContext;
 
     render() {
-        const {classes, title} = this.props;
-        const {tasks} = this.context;
+        const {classes, list: {title, tasks, addTask}} = this.props;
 
         return (
             <Paper className={classes.root} elevation={10}>
                 <Typography variant="h4">
                     {title}
                 </Typography>
-                {tasks.map(task => <ToDoTask task={task} />)}
+                {tasks.map((task, idx) => <ToDoTask task={task} key={idx} />)}
                 <div className={classes.popUpContainer}>
-                    <PopUpAdd />
+                    <PopUpAdd addTask={addTask} />
                 </div>
             </Paper>
         );

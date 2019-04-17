@@ -14,6 +14,7 @@ class ToDoTask extends React.Component {
     render() {
         const {task} = this.props;
         const {text, isChecked} = task;
+        
         return (
             <FormGroup row>
                 <FormControlLabel
